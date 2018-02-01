@@ -47,13 +47,13 @@ def perceptron(Input, label, w, miss):
         # print('np.dot(w, x):', np.dot(w, x), 'label[i]: ', label[i])
         if np.dot(w, x) * label[i] < 0:
             miss[i] = 1
-            w = list(np.add(w, np.multiply(x, label[i])))
+            w = list(np.add(w, np.multiply(x, label[i]))) # add up to vector
             track += 1
         else:
             miss[i] = 0
     return w, miss
 
-# this train method doesn't work very good
+
 def train(p, Input, label, w):
     miss = [1] * N
     print('miss before iter:', miss)
