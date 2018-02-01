@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jan 25 18:22:05 2018
+
+@author: spencer
+
 Perceptron learing algorithm in 2d
 As a presentation of the idea
 This algorithm will be generalized in to suit more realistic scenarios.
-
-@author: spencer
 """
 import numpy as np
 import matplotlib.pyplot as plt
