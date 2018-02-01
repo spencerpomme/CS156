@@ -35,7 +35,7 @@ def linear_solver(X:np.matrix, y:np.matrix)->np.matrix:
     Input: list of x
     label: list of y
     """
-    return ((np.transpose(X) * X).I * np.transpose(X)) * np.transpose(y)
+    return (np.transpose(X) * X).I * np.transpose(X) * np.transpose(y)
 
 # No need for a train function here because linear_solver is one-step
     
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     plt.plot([-1, 0], [0, -1], 'r--', linewidth=3)
     
     w_hypoth = linear_solver(np.matrix(xs), np.matrix(ys))
-    print(w_hypoth)
+    
     
     """
     # plot the true line
