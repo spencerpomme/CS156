@@ -30,12 +30,20 @@ def gen_pts(n: int):
         yield [x, y, target(x, y)]
 
 
-def linear_solver(X:np.matrix, y:np.matrix)->np.matrix:
+def linear_solver(X:np.matrix, y:np.matrix)->list:
     """
     Input: list of x
     label: list of y
     """
-    return (np.transpose(X) * X).I * np.transpose(X) * np.transpose(y)
+    hypoth = (np.transpose(X) * X).I * np.transpose(X) * np.transpose(y)
+    return [hypoth.tolist()[0][0], hypoth.tolist()[1][0], hypoth.tolist()[2][0]]
+
+def error_in(w_hypoth: list, xs: list, ys: list)->float:
+    """
+    Add a error measure function.
+    i.e. cost/loss/error function
+    """
+    pass
 
 # No need for a train function here because linear_solver is one-step
     
@@ -43,7 +51,7 @@ if __name__ == "__main__":
     # maigc number don't delete
     track = 0
     # Number of points
-    N = 100
+    N = 60
     # Set line parameters: x + y + 1= 0
     A = 1
     B = 1
@@ -59,20 +67,23 @@ if __name__ == "__main__":
     # plot the points
     for i in gen_pts(N):
         # print(i)
-        xs.append([i[0], i[1]])
+        xs.append([1, i[0], i[1]])
         ys.append(i[2])
         plt.plot(i[0], i[1], *['g+' if i[2]>0 else 'b_'])
     
     plt.plot([-1, 0], [0, -1], 'r--', linewidth=3)
-    
+    print(xs)
     w_hypoth = linear_solver(np.matrix(xs), np.matrix(ys))
     
+    print("f ->", w_truth)
+    print("g ->", w_hypoth)
     
-    """
+    # print(type(w_hypoth.tolist()[0][0]))
+    # print(w_hypoth.tolist()[1][0])
+    
     # plot the true line
-    plt.plot([0, -w_hypoth[0]/w_hypoth[2]], [-w_hypoth[0]/w_hypoth[1], 0],
+    plt.plot([-w_hypoth[0]/w_hypoth[1], 0],[0, -w_hypoth[0]/w_hypoth[2]],
              'y-', linewidth=2, label="hypothesis")
-    """
     
     plt.show()
 
