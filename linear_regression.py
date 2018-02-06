@@ -40,10 +40,15 @@ def linear_solver(X:np.matrix, y:np.matrix)->list:
 
 def error_in(w_hypoth: list, xs: list, ys: list)->float:
     """
-    Add a error measure function.
-    i.e. cost/loss/error function
+    Add a error measure function (i.e. cost/loss/error function)
+    Measures the in-sample error.
     """
-    pass
+    error = 0
+    total = len(ys)
+    for i in range(total):
+        if (1 if np.dot(w_hypoth, xs[i]) > 0 else -1) != ys[i]:
+            error += 1
+    return error / total
 
 # No need for a train function here because linear_solver is one-step
     
@@ -51,7 +56,7 @@ if __name__ == "__main__":
     # maigc number don't delete
     track = 0
     # Number of points
-    N = 60
+    N = 100
     # Set line parameters: x + y + 1= 0
     A = 1
     B = 1
@@ -65,27 +70,32 @@ if __name__ == "__main__":
     p1 = [-1, 0]
     p2 = [0, -1]
     # plot the points
-    for i in gen_pts(N):
-        # print(i)
-        xs.append([1, i[0], i[1]])
-        ys.append(i[2])
-        plt.plot(i[0], i[1], *['g+' if i[2]>0 else 'b_'])
+    for e in range(100):
+        errors = []
+        for i in gen_pts(N):
+            # print(i)
+            xs.append([1, i[0], i[1]])
+            ys.append(i[2])
+            plt.plot(i[0], i[1], *['g+' if i[2]>0 else 'b_'])
     
-    plt.plot([-1, 0], [0, -1], 'r--', linewidth=3)
-    print(xs)
-    w_hypoth = linear_solver(np.matrix(xs), np.matrix(ys))
+        plt.plot([-1, 0], [0, -1], 'r--', linewidth=3)
+        w_hypoth = linear_solver(np.matrix(xs), np.matrix(ys))
     
-    print("f ->", w_truth)
-    print("g ->", w_hypoth)
+        # print("f ->", w_truth)
+        # print("g ->", w_hypoth)
+        errors.append(error_in(w_hypoth, xs, ys))
+        print("in-sample error -> ", error_in(w_hypoth, xs, ys))
+        plt.plot([-w_hypoth[0]/w_hypoth[1], 0],[0, -w_hypoth[0]/w_hypoth[2]],
+             'y-', linewidth=2, label="hypothesis")
+    
+        plt.show()
+    print(sum(errors)/100)
     
     # print(type(w_hypoth.tolist()[0][0]))
     # print(w_hypoth.tolist()[1][0])
     
     # plot the true line
-    plt.plot([-w_hypoth[0]/w_hypoth[1], 0],[0, -w_hypoth[0]/w_hypoth[2]],
-             'y-', linewidth=2, label="hypothesis")
     
-    plt.show()
 
     
 
