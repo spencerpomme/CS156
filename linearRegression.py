@@ -90,12 +90,5 @@ if __name__ == "__main__":
     
         plt.show()
     print(sum(errors)/100)
-    
     # print(type(w_hypoth.tolist()[0][0]))
     # print(w_hypoth.tolist()[1][0])
-    
-    # plot the true line
-    
-
-    
-
